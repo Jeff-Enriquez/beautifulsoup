@@ -373,6 +373,44 @@ python bs4\tests\m2\test_task6.py
 python bs4\tests\m2\test_task7.py
 ```
 
+## Milestone 3
+
+> For instructions on environment, cloning, or setup, please refer to 
+[Milestone 2](#milestone-2).
+
+A third suite under `apps/m3/` that reimplements the same two editing tasks
+as Milestone 2 (`task6.py` and `task7.py`) using the *transformer-function*
+forms of the fork's `SoupReplacer` hook, instead of the convenience
+`og_tag`/`alt_tag` and `add_classes`/`remove_classes` arguments.
+
+### What's here
+
+| File | Task | Parsing hook |
+| --- | --- | --- |
+| `task6.py` | Rename every `<b>` tag to `<blockquote>` and write the tree to a file. | `replacer=bs4.SoupReplacer(name_xformer=...)` |
+| `task7.py` | Add a class to every `<p>` tag (optionally removing another class, or clearing all classes with `*`) and write the tree to a file. | `replacer=bs4.SoupReplacer(xformer=...)` |
+
+Both scripts accept `.xml` files too and share the command-line interface
+of their Milestone 2 counterparts:
+
+```shell
+python3 apps/m3/task6.py bs4/tests/small1.html [output]
+python3 apps/m3/task7.py bs4/tests/small1.html [class_attribute1] [class_attribute2] [-o output]
+```
+
+### Tests
+
+Unit tests live under `bs4/tests/m3/`. `test_task6.py` runs `task6.py`
+against `giga.html`, `medium1.html`, and `large1.html` under a 50 GiB
+address-space limit; `test_task7.py` runs `task7.py` against the non-GB
+corpus inputs and checks the classes written back to disk. Both also
+unit-test the `name_xformer`/`xformer` behavior directly.
+
+```shell
+python3 bs4/tests/m3/test_task6.py
+python3 bs4/tests/m3/test_task7.py
+```
+
 ## See also
 
 * [Beautiful Soup documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
